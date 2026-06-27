@@ -102,7 +102,8 @@ nav { display:flex;justify-content:space-between;align-items:center;padding:24px
 .signs-list li::before { content:'--';position:absolute;left:0;color:rgba(255,255,255,0.2); }
 .reassurance-box { background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:20px 24px;margin-top:20px; }
 .reassurance-box p { font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;font-style:italic;margin:0; }
-.ds-card { background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:40px;display:flex;justify-content:space-between;align-items:center;gap:32px; }
+.ds-card { background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:40px;display:flex;justify-content:space-between;align-items:center;gap:32px;transition:background 0.25s ease,border-color 0.25s ease,transform 0.25s ease; }
+.ds-card:hover { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);transform:translateY(-2px); }
 .ds-title { font-size:22px;font-weight:500;color:rgba(255,255,255,0.6);margin-bottom:12px; }
 .ds-desc { font-size:14px;color:rgba(255,255,255,0.35);line-height:1.7;max-width:500px; }
 .ds-badge { padding:8px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap; }
@@ -455,7 +456,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
 
     <div class="section-spacious">
       <div class="section-label">Data Science</div>
-      <div class="ds-card">
+      <div class="ds-card" onclick="navigate('datascience')" style="cursor:pointer;">
         <div>
           <div class="ds-title">Coming Soon — Data Projects</div>
           <div class="ds-desc">Alongside education, I'm building skills in data science and analysis. Projects in Python, SQL and data visualisation coming soon. My goal: applying data to social impact and education research.</div>
@@ -594,6 +595,23 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       </span>
     </footer>
   </div>
+
+  <!-- DATA SCIENCE PAGE -->
+  <div class="page" id="page-datascience">
+    <div class="section-spacious" style="max-width:760px;margin:0 auto;text-align:center;padding-top:18vh;">
+      <canvas id="particle-canvas" style="width:100%;max-width:700px;height:320px;cursor:pointer;touch-action:none;"></canvas>
+      <div class="section-intro-text" id="ds-reveal-text" style="font-size:clamp(22px,3.2vw,34px);line-height:2.1;word-spacing:0.25em;max-width:680px;margin:48px auto 0;text-align:left;font-weight:500;">My background is in psychology and learning support. I focus on understanding people, and acting on that understanding to support them. Data science gives me the tools to test that understanding at scale, looking not just at one classroom, but at patterns across hundreds of cases. I'm currently building skills in Python, SQL, and data visualisation, with one long-term goal in mind: applying that combination to migration and social policy research, at organisations like IOM or UNHCR, where data can reveal patterns that are invisible case by case, showing who needs help and what's working.</div>
+    </div>
+    <div style="height:40vh;"></div>
+    <footer>
+      <span>2026 Daphne Thalia Coffie</span>
+      <span style="display:flex;gap:16px;align-items:center;">
+        <a href="https://www.linkedin.com/in/daphne-thalia-coffie-45158416b" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn</a>
+        <a href="mailto:daphnecoffie2112@gmail.com" style="color:inherit;text-decoration:none;">Email</a>
+        <span>Lisbon, Portugal · Available Worldwide</span>
+      </span>
+    </footer>
+  </div>
 </div>
 
 <script>
@@ -637,6 +655,7 @@ function navigate(page){
     window.scrollTo(0,0);
     updateNavActive(page);
     if(page==='story') initStoryAnimation();
+    if(page==='datascience'){ initParticleText(); initScrollReveal(); }
   }
   closeMobileNav();
 }
@@ -859,6 +878,138 @@ function goToTopic(id){
   card.scrollIntoView({behavior:'smooth',block:'center'});
 }
 initChildQuiz();
+
+// Particle text — "DATA WORK IN PROGRESS"
+let particleState=null;
+function initParticleText(){
+  const canvas=document.getElementById('particle-canvas');
+  if(!canvas||particleState)return;
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+
+  function resize(){
+    const rect=canvas.getBoundingClientRect();
+    canvas.width=rect.width*dpr;
+    canvas.height=rect.height*dpr;
+    ctx.scale(dpr,dpr);
+    buildParticles(rect.width,rect.height);
+  }
+
+  let particles=[];
+  function buildParticles(w,h){
+    const off=document.createElement('canvas');
+    off.width=w;off.height=h;
+    const octx=off.getContext('2d');
+    octx.fillStyle='#fff';
+    const fontSize=Math.min(w/7,68);
+    octx.font='700 '+fontSize+'px Helvetica Neue, Arial, sans-serif';
+    octx.textAlign='center';
+    octx.textBaseline='middle';
+    octx.fillText('DATA WORK',w/2,h/2-fontSize*0.62);
+    octx.fillText('IN PROGRESS',w/2,h/2+fontSize*0.62);
+    const imgData=octx.getImageData(0,0,w,h).data;
+    particles=[];
+    const gap=Math.max(3,Math.floor(w/220));
+    for(let y=0;y<h;y+=gap){
+      for(let x=0;x<w;x+=gap){
+        const alpha=imgData[(y*w+x)*4+3];
+        if(alpha>120){
+          particles.push({
+            x:x+(Math.random()-0.5)*40,y:y+(Math.random()-0.5)*40,
+            tx:x,ty:y,
+            vx:0,vy:0,
+            size:Math.random()*1.2+0.6,
+            shade:Math.random()*0.4+0.5
+          });
+        }
+      }
+    }
+    particleState={particles,w,h};
+  }
+
+  let mouse={x:-9999,y:-9999};
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    mouse.x=e.clientX-rect.left;
+    mouse.y=e.clientY-rect.top;
+  });
+  canvas.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+  canvas.addEventListener('touchmove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const t=e.touches[0];
+    mouse.x=t.clientX-rect.left;
+    mouse.y=t.clientY-rect.top;
+  },{passive:true});
+  canvas.addEventListener('touchend',()=>{mouse.x=-9999;mouse.y=-9999;});
+
+  function animate(){
+    if(!particleState)return;
+    const {particles,w,h}=particleState;
+    ctx.clearRect(0,0,w,h);
+    for(const p of particles){
+      const dx=p.x-mouse.x, dy=p.y-mouse.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const repelRadius=32;
+      if(dist<repelRadius){
+        const force=(repelRadius-dist)/repelRadius;
+        const angle=Math.atan2(dy,dx);
+        p.vx+=Math.cos(angle)*force*2.2;
+        p.vy+=Math.sin(angle)*force*2.2;
+      }
+      const homeX=p.tx-p.x, homeY=p.ty-p.y;
+      p.vx+=homeX*0.004;
+      p.vy+=homeY*0.004;
+      p.vx*=0.97;
+      p.vy*=0.97;
+      p.x+=p.vx;
+      p.y+=p.vy;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,'+p.shade+')';
+      ctx.fill();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  window.addEventListener('resize',resize);
+  animate();
+}
+
+// Scroll reveal — word by word, dimmed to bright
+let revealInitialized=false;
+function initScrollReveal(){
+  const el=document.getElementById('ds-reveal-text');
+  if(!el||revealInitialized)return;
+  revealInitialized=true;
+
+  const words=el.textContent.trim().split(/\s+/);
+  el.innerHTML=words.map(w=>'<span class="reveal-word" style="opacity:0.15;transition:opacity 0.4s ease;">'+w+'</span>').join(' ');
+  const spans=el.querySelectorAll('.reveal-word');
+
+  function onScroll(){
+    const rect=el.getBoundingClientRect();
+    const vh=window.innerHeight;
+    // Tie progress to the page's actual scrollable range, so "most" lights up
+    // by the time you reach the bottom of the page — works regardless of how
+    // much content there is below this paragraph.
+    const docEl=document.documentElement;
+    const maxScroll=Math.max(docEl.scrollHeight-vh,1);
+    const elTop=window.scrollY+rect.top; // element's position from top of document
+    const revealStart=Math.max(elTop-vh*0.85,0); // start a bit before it's fully in view
+    const revealEnd=maxScroll; // finish right at the bottom of the page
+    let progress=(window.scrollY-revealStart)/Math.max(revealEnd-revealStart,1);
+    progress=Math.max(0,Math.min(1,progress));
+    const revealCount=Math.round(progress*spans.length);
+    spans.forEach((s,i)=>{
+      s.style.opacity=i<revealCount?'1':'0.15';
+    });
+  }
+
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  onScroll();
+}
 </script>
 </body>
 </html>
