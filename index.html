@@ -146,7 +146,23 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
   .section-spacious{padding:64px 20px;}
   .about-grid,.services-grid,.booking-grid,.topics-grid{grid-template-columns:1fr;} .ds-card{flex-direction:column;}
   footer{padding:16px 20px;flex-direction:column;gap:8px;}
-  .loading-corner-left,.loading-corner-right{font-size:11px;}
+  .loading-corner-left,.loading-corner-right{
+  font-size:12px;
+  position:static;
+  transform:none;
+  left:auto;right:auto;top:auto;
+  text-align:center;
+  width:100%;
+  max-width:280px;
+  margin:0 auto;
+  line-height:1.5;
+}
+#loading-screen{
+  flex-direction:column;
+}
+.loading-corner-left{order:2;margin-top:28px;}
+.loading-corner-right{order:3;margin-top:4px;color:rgba(74,48,48,0.6);}
+#loading-screen svg, #loading-screen img{order:1;}
   .loading-corner-left{left:20px;} .loading-corner-right{right:20px;}
   .quiz-container{padding:28px 22px;}
 
