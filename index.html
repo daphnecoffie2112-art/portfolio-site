@@ -574,7 +574,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       <div class="booking-grid">
         <div class="booking-card">
           <div class="booking-title">Free Discovery Call (30 min)</div>
-          <div class="booking-desc">Whether you're not sure what you're seeing, or you already have a diagnosis and want to explore support options — I'm happy to have a conversation, no obligation.</div>
+          <div class="booking-desc">Whether you're not sure what you're seeing or already have a diagnosis, this call is a chance to talk it through and figure out next steps together. No obligation.</div>
           <a class="booking-btn primary" onclick="openCalendly()">Schedule now</a>
         </div>
         <div class="booking-card">
@@ -629,6 +629,7 @@ const iv=setInterval(()=>{
     setTimeout(()=>{document.getElementById('loading-screen').classList.add('hide');
       setTimeout(()=>{document.getElementById('loading-screen').style.display='none';
         document.getElementById('portfolio').style.display='block';
+        window.dispatchEvent(new Event('resize'));
         updateNavActive('home');},900);},400);}
   bar.style.width=p+'%';pct.textContent=Math.floor(p)+'%';
 },60);
@@ -1008,6 +1009,12 @@ function initScrollReveal(){
 
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',onScroll,{passive:true});
+  onScroll();
+}
+</script>
+</body>
+</html>
+
   onScroll();
 }
 </script>
