@@ -72,6 +72,13 @@ nav { display:flex;justify-content:space-between;align-items:center;padding:24px
 .pricing-note { margin-top:24px;font-size:13px;color:rgba(255,255,255,0.25);font-style:italic; }
 .calendly-note { margin-top:24px;font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;background:rgba(255,255,255,0.03);border-left:2px solid rgba(255,255,255,0.15);padding:16px 20px;border-radius:8px;max-width:640px; }
 .schools-text { font-size:18px;color:rgba(255,255,255,0.6);max-width:650px;line-height:1.7;margin-bottom:32px; }
+.schools-grid { display:grid;grid-template-columns:1fr 1fr;gap:64px;max-width:1100px; }
+.schools-left p { font-size:18px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:32px;max-width:440px; }
+.schools-cta { font-size:14px;color:rgba(255,255,255,0.5);border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;max-width:440px; }
+.schools-cta a { color:#c9a96e;text-decoration:none; }
+.school-item-upgraded { padding:18px 22px;border:1px solid rgba(255,255,255,0.08);border-left:2px solid #7a2323;border-radius:8px;background:rgba(255,255,255,0.015); }
+.school-item-title { font-size:14px;color:rgba(255,255,255,0.85);font-weight:500;margin-bottom:6px; }
+.school-item-desc { font-size:13px;color:rgba(255,255,255,0.45);line-height:1.5; }
 .schools-list { display:flex;flex-direction:column;gap:12px;max-width:500px; }
 .school-item { display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid rgba(255,255,255,0.07);border-radius:10px; }
 .school-dot { width:6px;height:6px;background:rgba(255,255,255,0.3);border-radius:50%;flex-shrink:0; }
@@ -136,47 +143,64 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
     background:#0a0a0a;
     padding:88px 28px 28px;
     max-height:0;overflow:hidden;
-    transition:max-height 0.3s ease;
+    opacity:0;
+    visibility:hidden;
+    transition:max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
     border-bottom:1px solid rgba(255,255,255,0.08);
     z-index:55;
   }
-  .nav-links.open{max-height:100vh;}
+  .nav-links.open{max-height:100vh;opacity:1;visibility:visible;}
   .nav-links a{padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;}
   .hero{padding:48px 20px 40px;} .section{padding:40px 20px;}
   .section-spacious{padding:64px 20px;}
   .about-grid,.services-grid,.booking-grid,.topics-grid{grid-template-columns:1fr;} .ds-card{flex-direction:column;}
   footer{padding:16px 20px;flex-direction:column;gap:8px;}
+  footer span[style*="display:flex"]{flex-wrap:wrap;gap:10px 16px!important;}
   .loading-corner-left,.loading-corner-right{
-  font-size:12px;
-  position:static;
-  transform:none;
-  left:auto;right:auto;top:auto;
-  text-align:center;
-  width:100%;
-  max-width:280px;
-  margin:0 auto;
-  line-height:1.5;
-}
-#loading-screen{
-  flex-direction:column;
-}
-.loading-corner-left{order:2;margin-top:28px;}
-.loading-corner-right{order:3;margin-top:4px;color:rgba(74,48,48,0.6);}
-#loading-screen svg, #loading-screen img{order:1;}
-  .loading-corner-left{left:20px;} .loading-corner-right{right:20px;}
+    font-size:12px;
+    position:static;
+    transform:none;
+    left:auto;right:auto;top:auto;
+    text-align:center;
+    width:100%;
+    max-width:280px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+  #loading-screen{
+    flex-direction:column;
+  }
+  .loading-corner-left{order:2;margin-top:28px;}
+  .loading-corner-right{order:3;margin-top:4px;color:rgba(74,48,48,0.6);}
+  #loading-screen svg, #loading-screen img{order:1;}
   .quiz-container{padding:28px 22px;}
 
-  /* My Story — stacked, centered mobile layout */
-  #my-story section[data-stage]{height:clamp(360px,52vh,520px)!important;}
-  #my-story svg{opacity:0.6;}
+  /* My Story — stacked, non-overlapping mobile layout */
+  #my-story section[data-stage]{
+    height:auto!important;
+    min-height:0!important;
+    padding:48px 20px 56px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+  }
+  #my-story section[data-stage] svg{
+    position:static!important;
+    width:140px!important;
+    height:140px!important;
+    margin-bottom:28px;
+    opacity:0.5;
+    order:1;
+  }
   .story-label{
-    left:50%!important;right:auto!important;
-    top:50%!important;
-    transform:translate(-50%,-50%)!important;
+    position:static!important;
+    top:auto!important;left:auto!important;right:auto!important;
+    transform:none!important;
     text-align:center!important;
-    max-width:88%!important;
-    width:88%!important;
-    padding:0 4%;
+    max-width:100%!important;
+    width:100%!important;
+    padding:0;
+    order:2;
   }
   .story-label [style*="margin-left:auto"]{margin-left:auto!important;margin-right:auto!important;}
   .story-label div[style*="max-width:300px"],
@@ -184,6 +208,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
   .story-label div[style*="font-size:clamp(46px"]{font-size:clamp(36px,11vw,56px)!important;}
   .story-intro{padding:56px 24px 24px!important;}
   .story-outro{padding:20px 24px 72px!important;}
+  .schools-grid{grid-template-columns:1fr!important;gap:40px!important;}
 }
 </style>
 </head>
@@ -209,7 +234,6 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       <a onclick="navigate('home')" data-page="home">Home</a>
       <a onclick="navigate('story')" data-page="story">My Story</a>
       <a onclick="navigate('booking')" data-page="booking">Book a Session</a>
-      <a onclick="navigate('contact')" data-page="contact">Contact</a>
     </div>
     <div class="nav-time" id="lisbon-time">LIS 00:00</div>
   </nav>
@@ -233,6 +257,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
           <div class="about-detail-item">
             <div class="about-detail-label">Background</div>
             <div class="about-detail-value">BSc Clinical Developmental Psychology — University of Amsterdam</div>
+            <div class="about-detail-value" style="margin-top:8px;opacity:0.75;">iPGCE — University of Derby, commencing September 2026</div>
           </div>
           <div class="about-detail-item">
             <div class="about-detail-label">Currently</div>
@@ -287,13 +312,18 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
 
     <div class="section-spacious" id="schools">
       <div class="section-label">For Schools</div>
-      <div class="schools-text">Ms. Coffie is available for collaboration with international and local schools seeking experienced learning support. With hands-on experience at TASIS Portugal and a strong psychology foundation, she brings both expertise and warmth to any educational setting.</div>
-      <div class="schools-list">
-        <div class="school-item"><div class="school-dot"></div><div class="school-item-text">Co-teaching &amp; in-class support</div></div>
-        <div class="school-item"><div class="school-dot"></div><div class="school-item-text">Individual learning support plans</div></div>
-        <div class="school-item"><div class="school-dot"></div><div class="school-item-text">Executive functioning programmes</div></div>
-        <div class="school-item"><div class="school-dot"></div><div class="school-item-text">Parent consultation &amp; guidance</div></div>
-        <div class="school-item"><div class="school-dot"></div><div class="school-item-text">Multilingual support (EN, ES, NL, Papiamentu)</div></div>
+      <div class="schools-grid">
+        <div class="schools-left">
+          <p>Ms. Coffie brings a psychology-informed approach to learning support, built through hands-on co-teaching experience at TASIS Portugal, an international school where she works daily within IEPs, multi-disciplinary teams, and parent-teacher structures. She's equally comfortable adapting to a school's existing frameworks as she is helping shape new ones.</p>
+          <div class="schools-cta">If you're exploring learning support partnerships or future collaboration, I'd welcome a conversation — <a href="mailto:daphnecoffie2112@gmail.com">daphnecoffie2112@gmail.com</a></div>
+        </div>
+        <div class="schools-list">
+          <div class="school-item-upgraded"><div class="school-item-title">Co-teaching &amp; in-class support</div><div class="school-item-desc">Integrating smoothly alongside subject teachers without disrupting lesson flow</div></div>
+          <div class="school-item-upgraded"><div class="school-item-title">Individual learning support plans</div><div class="school-item-desc">Written and tracked in line with school documentation standards</div></div>
+          <div class="school-item-upgraded"><div class="school-item-title">Executive functioning programmes</div><div class="school-item-desc">Practical, psychology-based strategies for organisation, planning and focus</div></div>
+          <div class="school-item-upgraded"><div class="school-item-title">Parent consultation &amp; guidance</div><div class="school-item-desc">Confident, clear communication that schools can stand behind</div></div>
+          <div class="school-item-upgraded"><div class="school-item-title">Multilingual support</div><div class="school-item-desc">English, Spanish, Dutch, Papiamentu — and growing fluency in Portuguese for local context</div></div>
+        </div>
       </div>
     </div>
 
@@ -419,7 +449,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       </div>
 
       <div style="margin-top:40px;">
-        <a class="booking-btn primary" onclick="navigate('booking')">Book a free 45-min call</a>
+        <a class="booking-btn primary" onclick="navigate('booking')">Book a free 30-min call</a>
       </div>
     </div>
 
@@ -436,7 +466,11 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
 
     <footer>
       <span>2026 Daphne Thalia Coffie</span>
-      <span>Lisbon, Portugal · Available Worldwide</span>
+      <span style="display:flex;gap:16px;align-items:center;">
+        <a href="https://www.linkedin.com/in/daphne-thalia-coffie-45158416b" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn</a>
+        <a href="mailto:daphnecoffie2112@gmail.com" style="color:inherit;text-decoration:none;">Email</a>
+        <span>Lisbon, Portugal · Available Worldwide</span>
+      </span>
     </footer>
   </div>
 
@@ -448,7 +482,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
   <div class="story-intro" style="padding:80px 48px 32px;max-width:1180px;margin:0 auto;">
     <div style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:32px;">(My Story)</div>
     <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(40px,7vw,90px);line-height:0.98;letter-spacing:-0.01em;color:#fff;margin-bottom:26px;">The path<br><span style="font-style:italic;font-weight:400;color:rgba(255,255,255,0.6);">that brought me here.</span></h2>
-    <p style="font-size:17px;line-height:1.85;color:rgba(255,255,255,0.5);max-width:540px;text-wrap:pretty;">Four places, one throughline. From a small island in the Caribbean to a quiet coast on the Atlantic — scroll, and let the journey draw itself.</p>
+    <p style="font-size:17px;line-height:1.85;color:rgba(255,255,255,0.5);max-width:540px;text-wrap:pretty;">Four places, one throughline. From a small island in the Caribbean to a quiet coast on the Atlantic.</p>
     <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-top:48px;">↓ Scroll to begin</div>
   </div>
 
@@ -524,7 +558,11 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
 </div>
     <footer style="background:#0a0a0a;">
       <span>2026 Daphne Thalia Coffie</span>
-      <span>Lisbon, Portugal · Available Worldwide</span>
+      <span style="display:flex;gap:16px;align-items:center;">
+        <a href="https://www.linkedin.com/in/daphne-thalia-coffie-45158416b" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn</a>
+        <a href="mailto:daphnecoffie2112@gmail.com" style="color:inherit;text-decoration:none;">Email</a>
+        <span>Lisbon, Portugal · Available Worldwide</span>
+      </span>
     </footer>
   </div>
 
@@ -534,8 +572,8 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       <div class="section-label">Book a Session</div>
       <div class="booking-grid">
         <div class="booking-card">
-          <div class="booking-title">Free Discovery Call (45 min)</div>
-          <div class="booking-desc">Not sure where to start? Book a free 45-minute call. We'll talk about your child, what you're noticing, and whether I'm the right fit. No obligation — just a warm conversation.</div>
+          <div class="booking-title">Free Discovery Call (30 min)</div>
+          <div class="booking-desc">Whether you're not sure what you're seeing, or you already have a diagnosis and want to explore support options — I'm happy to have a conversation, no obligation.</div>
           <a class="booking-btn primary" onclick="openCalendly()">Schedule now</a>
         </div>
         <div class="booking-card">
@@ -549,32 +587,11 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
     </div>
     <footer>
       <span>2026 Daphne Thalia Coffie</span>
-      <span>Lisbon, Portugal · Available Worldwide</span>
-    </footer>
-  </div>
-
-  <!-- CONTACT PAGE -->
-  <div class="page" id="page-contact">
-    <div class="section" id="contact">
-      <div class="section-label">Contact</div>
-      <div class="contact-nudge">
-        <div class="contact-nudge-title">Have questions about your child?</div>
-        <div class="contact-nudge-text">Whether you're not sure what you're seeing, or you already have a diagnosis and want to explore support options — I'm happy to have a conversation, no obligation.</div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a class="booking-btn primary" onclick="openCalendly()">Schedule a free call</a>
-          <a class="booking-btn" href="mailto:daphnecoffie2112@gmail.com">Get in touch</a>
-        </div>
-      </div>
-      <div class="contact-big">Let's talk about how I can support your child or school.</div>
-      <div class="contact-links">
-        <a class="contact-link" href="https://www.linkedin.com/in/daphne-thalia-coffie-45158416b" target="_blank">LinkedIn</a>
-        <a class="contact-link" href="mailto:daphnecoffie2112@gmail.com">Email</a>
-      </div>
-      <div class="pricing-note" style="margin-top:16px;">Responding within 48 hours · Online &amp; in-person available</div>
-    </div>
-    <footer>
-      <span>2026 Daphne Thalia Coffie</span>
-      <span>Lisbon, Portugal · Available Worldwide</span>
+      <span style="display:flex;gap:16px;align-items:center;">
+        <a href="https://www.linkedin.com/in/daphne-thalia-coffie-45158416b" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn</a>
+        <a href="mailto:daphnecoffie2112@gmail.com" style="color:inherit;text-decoration:none;">Email</a>
+        <span>Lisbon, Portugal · Available Worldwide</span>
+      </span>
     </footer>
   </div>
 </div>
