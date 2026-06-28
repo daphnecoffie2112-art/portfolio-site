@@ -234,6 +234,7 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
     <div class="nav-links" id="nav-links">
       <a onclick="navigate('home')" data-page="home">Home</a>
       <a onclick="navigate('story')" data-page="story">My Story</a>
+      <a onclick="navigate('datascience')" data-page="datascience">Data Work</a>
       <a onclick="navigate('booking')" data-page="booking">Book a Session</a>
     </div>
     <div class="nav-time" id="lisbon-time">LIS 00:00</div>
@@ -245,8 +246,12 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
       <div class="hero-name">DAPHNE<br>THALIA<br>COFFIE</div>
       <div class="hero-tagline">"Every learner deserves to blossom"</div>
       <div class="hero-sub">
-        <div class="hero-title">Learning Support Educator · Data Science Student</div>
+        <div class="hero-title">Learning Support Educator</div>
         <div class="hero-location" id="lisbon-time-2">Lisbon, PT — 00:00</div>
+      </div>
+      <div style="margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;">
+        <a class="booking-btn primary" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'});">Support for your child</a>
+        <a class="booking-btn" onclick="navigate('datascience')">My data work</a>
       </div>
     </div>
 
@@ -451,17 +456,6 @@ footer { padding:20px 48px;display:flex;justify-content:space-between;font-size:
 
       <div style="margin-top:40px;">
         <a class="booking-btn primary" onclick="navigate('booking')">Book a free 30-min call</a>
-      </div>
-    </div>
-
-    <div class="section-spacious">
-      <div class="section-label">Data Science</div>
-      <div class="ds-card" onclick="navigate('datascience')" style="cursor:pointer;">
-        <div>
-          <div class="ds-title">Coming Soon — Data Projects</div>
-          <div class="ds-desc">Alongside education, I'm building skills in data science and analysis. Projects in Python, SQL and data visualisation coming soon. My goal: applying data to social impact and education research.</div>
-        </div>
-        <div class="ds-badge">In Progress</div>
       </div>
     </div>
 
